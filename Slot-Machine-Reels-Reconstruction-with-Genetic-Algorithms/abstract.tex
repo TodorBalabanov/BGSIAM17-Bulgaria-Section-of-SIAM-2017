@@ -1,0 +1,47 @@
+\documentclass{article}
+\textwidth 130mm \textheight 188mm \footskip 8mm
+%
+\parindent 0in
+%
+\title{Slot Machine Reels Reconstruction with Genetic Algorithms}
+\author{Petar Tomov, Iliyan Zankinski, Todor Balabanov}
+%
+\begin{document}
+%
+\maketitle
+
+\underline{Introduction} This paper focuses on a very well know problem in the slot machine gambling games development - reverse engineering of the virtual reels. Virtual reels are trade secretes of the manufacturer usually. They are a discrete random distribution of the game symbols. The value for return to player (RTP) is adjusted by the placement of the symbols. If the RTP needs to be checked (without access to the game source code) a reconstruction of the virtual reels is necessary. Such check starts with visual observation of the game screens or by image processing of game screen-shots. This research proposes Genetic Algorithm (GA) as search technique for slot machines virtual reels reconstruction.
+\vspace*{3mm}
+
+\underline{Slot Machine Reels} For better understanding of the problem a brief description of the slot machine reels will be given. One of the basic concepts of the slots are the spinning reels. In the beginning slots were mechanical. Reels were driven to spin by manual handle. Nowadays slots are generally computerized. It means that mechanical reels are replaced with virtual reels. There is no handle anymore, but a button and a pseudo-random number generator (PRNG) are used for the outcome. Win is calculated according to symbols patterns that appear on the screen after the reels have stopped spinning. A known pay table defines how valuable each symbol on the screen is. More frequent symbols are less profitable and less frequent symbols are much more profitable and informative for reels reconstruction process. The accuracy of game RTP is used to measure reels reconstruction quality. If the reconstruction is good enough the RTP will be close to the RTP published by the manufacturer. When the game is produced the desired RTP is adjusted by mathematicians and game designers. Their job is to populate game reels with proper symbols in proper discrete distribution. The process of reels reconstruction is pretty similar to the process of the new reels construction. The only difference is about symbols classification patterns and the requirement this patterns to be presented in the reconstructed reels.
+\vspace*{3mm}
+
+\underline{Proposed Solution} Virtual reels analysis starts with screen pattern classification as image processing ( http://github.com/ TodorBalabanov/Slot-Machine-Symbols-Capture ). Classified patterns are used as pieces in the reconstructed sequence of the reels. A list of the classified patterns is the input for the algorithm ( http://github.com/ TodorBalabanov/Slot-Machine-Reel-Mosaicing ). The software implementation uses Apache Commons Genetic Algorithms Framework. Chromosomes are characters sequences of the symbols available in the slot game. The crossover operator is chosen to be a single cut point. It is the preferred way because strips of the symbols should be kept as much in order as possible. Crossover rate is experimentally chosen to be 90\%. Mutation operator is done in the simplest possible way by swapping two symbols in a single reel. Mutation rate is experimentally chosen to be 10\%. Tournament selection with arity value of 2 is used for reproducing parents choosing. Population of 23 individuals is selected experimentally. Reels reconstruction problem is highly combinatorial and because of this maximum running time is chosen as optimization stopping criteria. When the problem is highly combinatorial it is useful to apply elitism rule as it is applied in this research with rate of 10\%. The most complex part in the solution proposed is the fitness function organization. Five different components were involved in fitness function composition: 1) Number of wrong patterns found in the reconstructed reel, but not presented in classified patterns; 2) Number of missing patterns which should be presented in the reconstructed reel, because they are presented in the classified patterns; 3) Number of patterns which repeats more than once in the reconstructed reel; 4) Length of the reconstructed reel; 5) Euclidean distance of symbols frequencies between reconstructed reel and classified patterns. These five components can be separated in two groups of constraints - first and second are hard constraints (should not be violated) and the other three are soft constraints (can be violated). The most important criteria is related to wrong patterns. If in the reconstructed reel there are unobserved patterns it means that the reconstructed reel is generally wrong and the desired RTP will not be achieved. Secondly most important criteria is related to the missing patterns. If the patterns were observed, but they are missing in the reconstructed reel it means that the reel is not close enough to the original reel. Repeating patterns (third constraint) are not desirable, because they extend the length of the reconstructed reel, but can be accepted. Reconstructed reels are better accepted when they are as short as possible (fourth constraint), but length can vary. The final constraint is about the Euclidean closeness between the reconstructed reel and the classified patterns. Symbols frequencies are calculated for the classified patterns in the beginning of the algorithm. At each fitness function calculation symbols frequencies are calculated for each reconstructed reel. The reconstructed reel gets closer to the real reel when symbol frequencies are close. 
+\vspace*{3mm}
+
+\underline{Conclustions} Experiments show that absolutely automatic reconstruction is not possible with GA technique, but with some manual adjustments reconstructed reels are close to originals at least as RTP achieved. As further research it will be interesting reconstruction approach to be extended to optimization with Context-Sensitive Grammars (CSG).
+\vspace*{5mm}
+
+\underline{Acknowledgements} This work was supported by private funding of Velbazhd Software LLC.
+\end{document}
+%
+% Full addresses of the authors:
+%
+% Petar Tomov
+% Institute of Information and Communication Technologies, BAS
+% acad. G. Bontchev Str., block 2
+% 1113 Sofia, Bulgaria
+% p.tomov@iit.bas.bg
+%
+% Iliyan Zankinski
+% Institute of Information and Communication Technologies, BAS
+% acad. G. Bontchev Str., block 2
+% 1113 Sofia, Bulgaria
+% iliyan@hsi.iccs.bas.bg
+%
+% Todor Balabanov
+% Institute of Information and Communication Technologies, BAS
+% acad. G. Bontchev Str., block 2
+% 1113 Sofia, Bulgaria
+% todorb@iinf.bas.bg
+%

@@ -1,0 +1,44 @@
+\documentclass{article}
+\textwidth 130mm \textheight 188mm \footskip 8mm
+\parindent 0in
+%
+\title{Sound Vectorization with Genetic Algorithms}
+\author{Petar Tomov, Iliyan Zankinski, Todor Balabanov}
+%
+\begin{document}
+%
+\maketitle
+
+\underline{Introduction} In the audio based multimedia there are two common directions - WAVE audio and MIDI audio. The WAVE audio represents direct air vibrations assembled into a complex sound. On the other side MIDI audio is a sequence of musical events stating the order in which different musical notes should be played by different musical instruments. WAVE is a raw sound format and MIDI is a form of vector sound format. MIDI audio was developed with the progress of electronic musical instruments. It is an information representation standard which is very useful for real time audio information exchange and efficient file storage. To transform MIDI to WAVE is an easy task for the modern computers. It is done even inside the hardware sound cards by the module called MIDI synthesizer. The opposite transformation from WAVE to MIDI is relatively complex problem even for the modern computers. It is like a human that listens to the music and writing the notes corresponding to it. Some audio information is not needed in WAVE or MP3 form but in MIDI (such as games background music). In these situations the WAVE information should be transformed in a group of simple MIDI events. This process of sound data transformation is related to information reduction. The process is transformation of true sounds into a set of simple musical events. The problem of vectorization is very well known in literature and one of the most impressive implementations has been done with the image of Mona Lisa. The goal of this project was to approximate the picture of Mona Lisa by no more than 50 polygons. The colors and the points of the polygons were optimized with GAs. The same principles can be applied in sounds vectorization where WAVE information is transformed into a MIDI sequence.
+\vspace*{3mm}
+
+\underline{Proposed Solution} The model proposed is based on Genetic Algorithms (GA). GA is applied over a set of MIDI events. It is an unsupervised system which takes digital WAVE sounds as input and generates simplified, stylized vector data as output. A WAVE sound usually contains details that are not relevant for the audio quality and increase the cost of computations. Simplification of WAVE sounds is a process to eliminate the most useless elements, while retaining the perceptually dominant elements. Simplification of WAVE sound is used in the area of music composition and game development. In sounds simplification and vectorization digital WAVE samples are the input and generated simplified, stylized vector data are the output. The objective of sounds simplification by vectorization is to split the original sound into simple MIDI events. In this study MIDI events were chosen as approximation primitives to be used for sound reconstruction. Each MIDI event is described by its type, status and time. Each individual in the GA's population consists of an ordered set of events and a fitness value. The fitness value is calculated as Euclidean distance between the approximate sound and the original sound. The approximated sound is assembled by MIDI events. As an initial step GA population is initialized with randomly generated sets of events. Type, status and time are taken randomly for each event . During GA's evolutionary process individuals are selected from the population, crossover, mutation, evaluation and survival are applied so that the sound approximation is approved. In this study a binary crossover is chosen. Mutation is applied as time shifting and status change of one event in the individual. During evaluation phase the approximated sound is compared with the original sound. The result of the comparison is used as a fitness value of the individual. During the survival process it is decided which individual to be kept, the newly created or the already existing. The only stopping criteria used is the total number of sound evaluations.
+\vspace*{3mm}
+
+\underline{Conclusions} Experiments show that using GA may be very efficient and sound approximation is relatively accurate in the limits of the sound simplification. Optimization convergence is related to the probabilistic nature of GA. Sound comparison is time consuming and slows down the optimization process. As further research, it could be suitable for GA to be implemented as distributed computing algorithm. Such a distributed implementation is efficiently applicable for the class of evolutionary algorithms GA is a part of. The set of events can be treated as a multidimensional space and optimization can provide much better results.
+\vspace*{5mm}
+
+\underline{Acknowledgements} This work was supported by private funding of Velbazhd Software LLC.
+%
+\end{document}
+%
+% Full addresses of the authors:
+%
+% Petar Tomov
+% Institute of Information and Communication Technologies, BAS
+% acad. G. Bontchev Str., block 2
+% 1113 Sofia, Bulgaria
+% p.tomov@iit.bas.bg
+%
+% Iliyan Zankinski
+% Institute of Information and Communication Technologies, BAS
+% acad. G. Bontchev Str., block 2
+% 1113 Sofia, Bulgaria
+% iliyan@hsi.iccs.bas.bg
+%
+% Todor Balabanov
+% Institute of Information and Communication Technologies, BAS
+% acad. G. Bontchev Str., block 2
+% 1113 Sofia, Bulgaria
+% todorb@iinf.bas.bg
+%
